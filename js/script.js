@@ -1,5 +1,5 @@
 // ================================================
-//  ShopKart Main JavaScript with Account System
+//  ClicKart Main JavaScript with Account System
 //  Complete functionality for e-commerce website
 // ================================================
 
@@ -44,7 +44,7 @@ function initializeApp() {
 
 // Check if user is logged in
 function checkUserSession() {
-    const sessionUser = localStorage.getItem('shopkart_current_user');
+    const sessionUser = localStorage.getItem('ClicKart_current_user');
     if (sessionUser) {
         currentUser = JSON.parse(sessionUser);
         updateNavbar();
@@ -73,7 +73,7 @@ function handleRegister(event) {
     }
     
     // Check if user already exists
-    const users = JSON.parse(localStorage.getItem('shopkart_users') || '[]');
+    const users = JSON.parse(localStorage.getItem('ClicKart_users') || '[]');
     const existingUser = users.find(u => u.email === email);
     
     if (existingUser) {
@@ -95,11 +95,11 @@ function handleRegister(event) {
     };
     
     users.push(newUser);
-    localStorage.setItem('shopkart_users', JSON.stringify(users));
+    localStorage.setItem('ClicKart_users', JSON.stringify(users));
     
     // Auto login after registration
     currentUser = { id: newUser.id, name: newUser.name, email: newUser.email };
-    localStorage.setItem('shopkart_current_user', JSON.stringify(currentUser));
+    localStorage.setItem('ClicKart_current_user', JSON.stringify(currentUser));
     
     // Close modal
     const modal = bootstrap.Modal.getInstance(document.getElementById('registerModal'));
@@ -123,7 +123,7 @@ function handleLogin(event) {
     const password = document.getElementById('loginPassword').value;
     
     // Get all users
-    const users = JSON.parse(localStorage.getItem('shopkart_users') || '[]');
+    const users = JSON.parse(localStorage.getItem('ClicKart_users') || '[]');
     const user = users.find(u => u.email === email && u.password === password);
     
     if (!user) {
@@ -133,7 +133,7 @@ function handleLogin(event) {
     
     // Set current user
     currentUser = { id: user.id, name: user.name, email: user.email };
-    localStorage.setItem('shopkart_current_user', JSON.stringify(currentUser));
+    localStorage.setItem('ClicKart_current_user', JSON.stringify(currentUser));
     
     // Close modal
     const modal = bootstrap.Modal.getInstance(document.getElementById('loginModal'));
@@ -156,7 +156,7 @@ function logout() {
         saveUserData();
         
         // Clear session
-        localStorage.removeItem('shopkart_current_user');
+        localStorage.removeItem('ClicKart_current_user');
         currentUser = null;
         
         // Clear cart and wishlist
@@ -208,7 +208,7 @@ function updateNavbar() {
 function loadUserData() {
     if (!currentUser) return;
     
-    const users = JSON.parse(localStorage.getItem('shopkart_users') || '[]');
+    const users = JSON.parse(localStorage.getItem('ClicKart_users') || '[]');
     const user = users.find(u => u.id === currentUser.id);
     
     if (user) {
@@ -238,13 +238,13 @@ function loadUserData() {
 function saveUserData() {
     if (!currentUser) return;
     
-    const users = JSON.parse(localStorage.getItem('shopkart_users') || '[]');
+    const users = JSON.parse(localStorage.getItem('ClicKart_users') || '[]');
     const userIndex = users.findIndex(u => u.id === currentUser.id);
     
     if (userIndex !== -1) {
         users[userIndex].cart = shoppingCart;
         users[userIndex].wishlist = wishlist;
-        localStorage.setItem('shopkart_users', JSON.stringify(users));
+        localStorage.setItem('ClicKart_users', JSON.stringify(users));
     }
 }
 
@@ -255,7 +255,7 @@ function viewProfile() {
         return;
     }
     
-    const users = JSON.parse(localStorage.getItem('shopkart_users') || '[]');
+    const users = JSON.parse(localStorage.getItem('ClicKart_users') || '[]');
     const user = users.find(u => u.id === currentUser.id);
     
     if (user) {
@@ -627,11 +627,11 @@ function clearWishlist() {
 }
 
 function shareWishlist() {
-    const message = `Check out my wishlist on ShopKart! I have ${wishlist.length} items saved.`;
+    const message = `Check out my wishlist on ClicKart! I have ${wishlist.length} items saved.`;
     
     if (navigator.share) {
         navigator.share({
-            title: 'My ShopKart Wishlist',
+            title: 'My ClicKart Wishlist',
             text: message,
             url: window.location.href
         });
@@ -1027,7 +1027,7 @@ function saveCartToStorage() {
     if (currentUser) {
         saveUserData();
     } else {
-        localStorage.setItem('shopkart_cart', JSON.stringify(shoppingCart));
+        localStorage.setItem('ClicKart_cart', JSON.stringify(shoppingCart));
     }
 }
 
@@ -1035,7 +1035,7 @@ function loadCartFromStorage() {
     if (currentUser) {
         loadUserData();
     } else {
-        const saved = localStorage.getItem('shopkart_cart');
+        const saved = localStorage.getItem('ClicKart_cart');
         if (saved) {
             shoppingCart = JSON.parse(saved);
         }
@@ -1046,7 +1046,7 @@ function saveWishlistToStorage() {
     if (currentUser) {
         saveUserData();
     } else {
-        localStorage.setItem('shopkart_wishlist', JSON.stringify(wishlist));
+        localStorage.setItem('ClicKart_wishlist', JSON.stringify(wishlist));
     }
 }
 
@@ -1054,7 +1054,7 @@ function loadWishlistFromStorage() {
     if (currentUser) {
         loadUserData();
     } else {
-        const saved = localStorage.getItem('shopkart_wishlist');
+        const saved = localStorage.getItem('ClicKart_wishlist');
         if (saved) {
             wishlist = JSON.parse(saved);
         }
@@ -1133,5 +1133,5 @@ window.addEventListener('scroll', function() {
 })();
 
 // ===== CONSOLE MESSAGE =====
-console.log('%cShopKart E-commerce Website', 'color: #0d6efd; font-size: 20px; font-weight: bold;');
+console.log('%cClicKart E-commerce Website', 'color: #0d6efd; font-size: 20px; font-weight: bold;');
 console.log('%cWith Account System - Developed for Educational Purpose', 'color: #6c757d; font-size: 12px;');

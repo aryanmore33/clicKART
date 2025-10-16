@@ -1,5 +1,5 @@
 // ================================================
-//  ShopKart Product Database
+//  ClicKart Product Database
 //  Complete product data for all categories
 // ================================================
 
