@@ -1,5 +1,5 @@
 // ================================================
-//  ShopKart Main JavaScript
+//  ShopKart Main JavaScript with Account System
 //  Complete functionality for e-commerce website
 // ================================================
 
@@ -8,6 +8,7 @@ let shoppingCart = [];
 let wishlist = [];
 let currentProducts = [...productsData];
 let currentProductDetail = null;
+let currentUser = null;
 
 // ===== INITIALIZATION =====
 document.addEventListener('DOMContentLoaded', function() {
@@ -15,10 +16,12 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function initializeApp() {
+    checkUserSession();
     loadCartFromStorage();
     loadWishlistFromStorage();
     updateCartBadge();
     updateWishlistBadge();
+    updateNavbar();
     
     // Load featured products on homepage
     if (document.getElementById('featuredProducts')) {
@@ -35,6 +38,239 @@ function initializeApp() {
     
     // Initialize Bootstrap tooltips
     initializeTooltips();
+}
+
+// ===== ACCOUNT SYSTEM =====
+
+// Check if user is logged in
+function checkUserSession() {
+    const sessionUser = localStorage.getItem('shopkart_current_user');
+    if (sessionUser) {
+        currentUser = JSON.parse(sessionUser);
+        updateNavbar();
+    }
+}
+
+// Handle Registration
+function handleRegister(event) {
+    event.preventDefault();
+    
+    const name = document.getElementById('registerName').value.trim();
+    const email = document.getElementById('registerEmail').value.trim().toLowerCase();
+    const phone = document.getElementById('registerPhone').value.trim();
+    const password = document.getElementById('registerPassword').value;
+    const confirmPassword = document.getElementById('registerConfirmPassword').value;
+    
+    // Validation
+    if (password !== confirmPassword) {
+        showToast('Passwords do not match!', 'danger');
+        return;
+    }
+    
+    if (password.length < 6) {
+        showToast('Password must be at least 6 characters!', 'warning');
+        return;
+    }
+    
+    // Check if user already exists
+    const users = JSON.parse(localStorage.getItem('shopkart_users') || '[]');
+    const existingUser = users.find(u => u.email === email);
+    
+    if (existingUser) {
+        showToast('Email already registered! Please login.', 'warning');
+        return;
+    }
+    
+    // Create new user
+    const newUser = {
+        id: Date.now(),
+        name: name,
+        email: email,
+        phone: phone,
+        password: password, // In production, this should be hashed
+        createdAt: new Date().toISOString(),
+        cart: [],
+        wishlist: [],
+        orders: []
+    };
+    
+    users.push(newUser);
+    localStorage.setItem('shopkart_users', JSON.stringify(users));
+    
+    // Auto login after registration
+    currentUser = { id: newUser.id, name: newUser.name, email: newUser.email };
+    localStorage.setItem('shopkart_current_user', JSON.stringify(currentUser));
+    
+    // Close modal
+    const modal = bootstrap.Modal.getInstance(document.getElementById('registerModal'));
+    modal.hide();
+    
+    // Reset form
+    document.getElementById('registerForm').reset();
+    
+    showToast(`Welcome ${name}! Account created successfully.`, 'success');
+    updateNavbar();
+    
+    // Load user-specific data
+    loadUserData();
+}
+
+// Handle Login
+function handleLogin(event) {
+    event.preventDefault();
+    
+    const email = document.getElementById('loginEmail').value.trim().toLowerCase();
+    const password = document.getElementById('loginPassword').value;
+    
+    // Get all users
+    const users = JSON.parse(localStorage.getItem('shopkart_users') || '[]');
+    const user = users.find(u => u.email === email && u.password === password);
+    
+    if (!user) {
+        showToast('Invalid email or password!', 'danger');
+        return;
+    }
+    
+    // Set current user
+    currentUser = { id: user.id, name: user.name, email: user.email };
+    localStorage.setItem('shopkart_current_user', JSON.stringify(currentUser));
+    
+    // Close modal
+    const modal = bootstrap.Modal.getInstance(document.getElementById('loginModal'));
+    modal.hide();
+    
+    // Reset form
+    document.getElementById('loginForm').reset();
+    
+    showToast(`Welcome back, ${user.name}!`, 'success');
+    updateNavbar();
+    
+    // Load user-specific data
+    loadUserData();
+}
+
+// Logout
+function logout() {
+    if (confirm('Are you sure you want to logout?')) {
+        // Save current cart and wishlist to user profile
+        saveUserData();
+        
+        // Clear session
+        localStorage.removeItem('shopkart_current_user');
+        currentUser = null;
+        
+        // Clear cart and wishlist
+        shoppingCart = [];
+        wishlist = [];
+        
+        updateNavbar();
+        updateCartBadge();
+        updateWishlistBadge();
+        
+        showToast('Logged out successfully!', 'info');
+        
+        // Redirect to home
+        window.location.href = 'index.html';
+    }
+}
+
+
+// Update Navbar based on login status
+function updateNavbar() {
+    const loggedOutNav = document.getElementById('loggedOutNav');
+    const loggedInNav = document.getElementById('loggedInNav');
+    
+    if (!loggedOutNav || !loggedInNav) return;
+    
+    if (currentUser) {
+        // User is logged in - HIDE login/register, SHOW profile
+        loggedOutNav.classList.add('hide');
+        loggedOutNav.classList.remove('show');
+        loggedInNav.classList.add('show');
+        loggedInNav.classList.remove('hide');
+        
+        // Update user name in dropdown
+        const userNameDisplays = document.querySelectorAll('#userNameDisplay, #userNameDropdown');
+        userNameDisplays.forEach(el => {
+            if (el) el.textContent = currentUser.name.split(' ')[0]; // First name only
+        });
+    } else {
+        // User is logged out - SHOW login/register, HIDE profile
+        loggedOutNav.classList.add('show');
+        loggedOutNav.classList.remove('hide');
+        loggedInNav.classList.add('hide');
+        loggedInNav.classList.remove('show');
+    }
+}
+
+
+// Load user-specific data
+function loadUserData() {
+    if (!currentUser) return;
+    
+    const users = JSON.parse(localStorage.getItem('shopkart_users') || '[]');
+    const user = users.find(u => u.id === currentUser.id);
+    
+    if (user) {
+        shoppingCart = user.cart || [];
+        wishlist = user.wishlist || [];
+        
+        updateCartBadge();
+        updateWishlistBadge();
+        
+        // Refresh current page if needed
+        if (document.getElementById('cartItemsContainer')) {
+            displayCartPage();
+        }
+        if (document.getElementById('wishlistItemsContainer')) {
+            displayWishlistPage();
+        }
+        if (document.getElementById('featuredProducts')) {
+            displayFeaturedProducts();
+        }
+        if (document.getElementById('productsContainer')) {
+            displayProducts(currentProducts);
+        }
+    }
+}
+
+// Save user-specific data
+function saveUserData() {
+    if (!currentUser) return;
+    
+    const users = JSON.parse(localStorage.getItem('shopkart_users') || '[]');
+    const userIndex = users.findIndex(u => u.id === currentUser.id);
+    
+    if (userIndex !== -1) {
+        users[userIndex].cart = shoppingCart;
+        users[userIndex].wishlist = wishlist;
+        localStorage.setItem('shopkart_users', JSON.stringify(users));
+    }
+}
+
+// View Profile
+function viewProfile() {
+    if (!currentUser) {
+        showToast('Please login to view profile', 'warning');
+        return;
+    }
+    
+    const users = JSON.parse(localStorage.getItem('shopkart_users') || '[]');
+    const user = users.find(u => u.id === currentUser.id);
+    
+    if (user) {
+        alert(`Profile Information:\n\nName: ${user.name}\nEmail: ${user.email}\nPhone: ${user.phone}\nMember Since: ${new Date(user.createdAt).toLocaleDateString()}`);
+    }
+}
+
+// View Orders
+function viewOrders() {
+    if (!currentUser) {
+        showToast('Please login to view orders', 'warning');
+        return;
+    }
+    
+    alert('Order history feature coming soon!\n\nYour past orders will be displayed here.');
 }
 
 // ===== FEATURED PRODUCTS (Homepage) =====
@@ -59,7 +295,9 @@ function loadProductsPage() {
     const category = urlParams.get('category');
     
     if (category && category !== 'all') {
-        document.getElementById('categorySelect').value = category;
+        const categorySelect = document.getElementById('categorySelect');
+        if (categorySelect) categorySelect.value = category;
+        
         // Set radio button
         const radioBtn = document.getElementById('cat' + category.charAt(0).toUpperCase() + category.slice(1));
         if (radioBtn) radioBtn.checked = true;
@@ -175,7 +413,8 @@ function applyAllFilters() {
 
 function clearAllFilters() {
     // Reset category
-    document.getElementById('catAll').checked = true;
+    const catAll = document.getElementById('catAll');
+    if (catAll) catAll.checked = true;
     
     // Reset price checkboxes
     document.querySelectorAll('input[type="checkbox"][id^="price"]').forEach(cb => cb.checked = false);
@@ -234,6 +473,14 @@ function searchProducts(event) {
 
 // ===== CART FUNCTIONS =====
 function addToCart(productId) {
+    if (!currentUser) {
+        showToast('Please login to add items to cart!', 'warning');
+        // Open login modal
+        const loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
+        loginModal.show();
+        return;
+    }
+    
     const product = productsData.find(p => p.id === productId);
     if (!product) return;
     
@@ -253,11 +500,11 @@ function addToCart(productId) {
     showToast('Added to cart successfully!', 'success');
     
     // Add pulse animation
-    const cartBtn = document.querySelector('#cartBadge');
-    if (cartBtn) {
-        cartBtn.classList.add('pulse');
-        setTimeout(() => cartBtn.classList.remove('pulse'), 1000);
-    }
+    const cartBadges = document.querySelectorAll('#cartBadge');
+    cartBadges.forEach(badge => {
+        badge.classList.add('pulse');
+        setTimeout(() => badge.classList.remove('pulse'), 1000);
+    });
 }
 
 function removeFromCart(productId) {
@@ -303,6 +550,14 @@ function updateCartBadge() {
 
 // ===== WISHLIST FUNCTIONS =====
 function toggleWishlist(productId) {
+    if (!currentUser) {
+        showToast('Please login to add items to wishlist!', 'warning');
+        // Open login modal
+        const loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
+        loginModal.show();
+        return;
+    }
+    
     const product = productsData.find(p => p.id === productId);
     if (!product) return;
     
@@ -499,6 +754,13 @@ function proceedToCheckout() {
         return;
     }
     
+    if (!currentUser) {
+        showToast('Please login to proceed to checkout!', 'warning');
+        const loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
+        loginModal.show();
+        return;
+    }
+    
     const total = shoppingCart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
     const totalItems = shoppingCart.reduce((sum, item) => sum + item.quantity, 0);
     
@@ -692,6 +954,13 @@ function decreaseQuantity() {
 function addToCartFromDetail() {
     if (!currentProductDetail) return;
     
+    if (!currentUser) {
+        showToast('Please login to add items to cart!', 'warning');
+        const loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
+        loginModal.show();
+        return;
+    }
+    
     const quantity = parseInt(document.getElementById('productQuantity').value);
     
     const existingItem = shoppingCart.find(item => item.id === currentProductDetail.id);
@@ -729,6 +998,13 @@ function toggleWishlistFromDetail() {
 function buyNow() {
     if (!currentProductDetail) return;
     
+    if (!currentUser) {
+        showToast('Please login to proceed!', 'warning');
+        const loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
+        loginModal.show();
+        return;
+    }
+    
     addToCartFromDetail();
     setTimeout(() => {
         window.location.href = 'cart.html';
@@ -741,30 +1017,47 @@ document.addEventListener('click', function(e) {
         document.querySelectorAll('.color-btn').forEach(btn => btn.classList.remove('active'));
         e.target.classList.add('active');
         const color = e.target.getAttribute('data-color');
-        document.getElementById('selectedColor').textContent = color;
+        const selectedColorEl = document.getElementById('selectedColor');
+        if (selectedColorEl) selectedColorEl.textContent = color;
     }
 });
 
 // ===== STORAGE FUNCTIONS =====
 function saveCartToStorage() {
-    localStorage.setItem('shopkart_cart', JSON.stringify(shoppingCart));
+    if (currentUser) {
+        saveUserData();
+    } else {
+        localStorage.setItem('shopkart_cart', JSON.stringify(shoppingCart));
+    }
 }
 
 function loadCartFromStorage() {
-    const saved = localStorage.getItem('shopkart_cart');
-    if (saved) {
-        shoppingCart = JSON.parse(saved);
+    if (currentUser) {
+        loadUserData();
+    } else {
+        const saved = localStorage.getItem('shopkart_cart');
+        if (saved) {
+            shoppingCart = JSON.parse(saved);
+        }
     }
 }
 
 function saveWishlistToStorage() {
-    localStorage.setItem('shopkart_wishlist', JSON.stringify(wishlist));
+    if (currentUser) {
+        saveUserData();
+    } else {
+        localStorage.setItem('shopkart_wishlist', JSON.stringify(wishlist));
+    }
 }
 
 function loadWishlistFromStorage() {
-    const saved = localStorage.getItem('shopkart_wishlist');
-    if (saved) {
-        wishlist = JSON.parse(saved);
+    if (currentUser) {
+        loadUserData();
+    } else {
+        const saved = localStorage.getItem('shopkart_wishlist');
+        if (saved) {
+            wishlist = JSON.parse(saved);
+        }
     }
 }
 
@@ -841,4 +1134,4 @@ window.addEventListener('scroll', function() {
 
 // ===== CONSOLE MESSAGE =====
 console.log('%cShopKart E-commerce Website', 'color: #0d6efd; font-size: 20px; font-weight: bold;');
-console.log('%cDeveloped for Educational Purpose', 'color: #6c757d; font-size: 12px;');
+console.log('%cWith Account System - Developed for Educational Purpose', 'color: #6c757d; font-size: 12px;');

@@ -1,6 +1,6 @@
 /* ========================================
    ShopKart E-commerce Website Styles
-   Complete CSS for Multi-Page Website
+   Complete CSS with Account System
    ======================================== */
 
 /* ===== Import Fonts ===== */
@@ -92,6 +92,42 @@ body {
         opacity: 1;
         transform: translateY(0);
     }
+}
+
+/* ===== User Profile Dropdown ===== */
+.dropdown-menu-end {
+    min-width: 250px;
+}
+
+.dropdown-header {
+    font-weight: 600;
+    color: var(--primary-color);
+    font-size: 1rem;
+}
+
+.dropdown-item {
+    padding: 0.75rem 1.5rem;
+    transition: all 0.3s ease;
+}
+
+.dropdown-item:hover {
+    background-color: #f8f9fa;
+    padding-left: 2rem;
+}
+
+.dropdown-item i {
+    width: 20px;
+    margin-right: 10px;
+}
+
+.dropdown-item.text-danger:hover {
+    background-color: #fee;
+}
+
+/* Badge in dropdown */
+.dropdown-item .badge {
+    font-size: 0.7rem;
+    padding: 0.25rem 0.5rem;
 }
 
 /* ===== Hero Section ===== */
@@ -943,4 +979,21 @@ img {
 /* ===== Smooth Transitions ===== */
 * {
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+/* ===== Ensure Proper Navbar Display ===== */
+#loggedOutNav {
+    display: flex !important;
+}
+
+#loggedInNav {
+    display: none !important;
+}
+
+/* When user is logged in (controlled by JS) */
+#loggedInNav.show {
+    display: block !important;
+}
+
+#loggedOutNav.hide {
+    display: none !important;
 }
