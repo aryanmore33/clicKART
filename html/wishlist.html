@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Wishlist - ShopKart</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top">
+        <div class="container-fluid">
+            <a class="navbar-brand fw-bold" href="index.html">
+                <i class="bi bi-shop"></i> ShopKart
+            </a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="mainNav">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="products.html">All Products</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
+                            Categories
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="products.html?category=electronics">
+                                <i class="bi bi-phone"></i> Electronics
+                            </a></li>
+                            <li><a class="dropdown-item" href="products.html?category=fashion">
+                                <i class="bi bi-bag"></i> Fashion
+                            </a></li>
+                            <li><a class="dropdown-item" href="products.html?category=footwear">
+                                <i class="bi bi-boot"></i> Footwear
+                            </a></li>
+                            <li><a class="dropdown-item" href="products.html?category=home">
+                                <i class="bi bi-house"></i> Home & Furniture
+                            </a></li>
+                            <li><a class="dropdown-item" href="products.html?category=beauty">
+                                <i class="bi bi-heart"></i> Beauty & Care
+                            </a></li>
+                            <li><a class="dropdown-item" href="products.html?category=sports">
+                                <i class="bi bi-trophy"></i> Sports & Fitness
+                            </a></li>
+                            <li><a class="dropdown-item" href="products.html?category=books">
+                                <i class="bi bi-book"></i> Books & Stationery
+                            </a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="about.html">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="contact.html">Contact</a>
+                    </li>
+                </ul>
+                
+                <!-- Search Bar -->
+                <form class="d-flex me-3" onsubmit="searchProducts(event)">
+                    <input class="form-control me-2" type="search" id="navSearchInput" placeholder="Search products..." style="min-width: 250px;">
+                    <button class="btn btn-outline-light" type="submit">
+                        <i class="bi bi-search"></i>
+                    </button>
+                </form>
+                
+                <!-- Action Buttons -->
+                <div class="d-flex gap-2">
+                    <a href="wishlist.html" class="btn btn-light position-relative">
+                        <i class="bi bi-heart-fill"></i>
+                        <span id="wishlistBadge" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                            0
+                        </span>
+                    </a>
+                    <a href="cart.html" class="btn btn-outline-light position-relative">
+                        <i class="bi bi-cart3"></i>
+                        <span id="cartBadge" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                            0
+                        </span>
+                    </a>
+                    <button class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#loginModal">
+                        <i class="bi bi-person-circle"></i> Login
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Breadcrumb -->
+    <section class="py-3 bg-light">
+        <div class="container">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb mb-0">
+                    <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                    <li class="breadcrumb-item active">My Wishlist</li>
+                </ol>
+            </nav>
+        </div>
+    </section>
+
+    <!-- Wishlist Section -->
+    <section class="py-5">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2><i class="bi bi-heart-fill text-danger"></i> My Wishlist</h2>
+                <div>
+                    <span class="badge bg-primary fs-6"><span id="wishlistCount">0</span> Items</span>
+                </div>
+            </div>
+
+            <!-- Wishlist Actions -->
+            <div id="wishlistActions" class="mb-4 d-none">
+                <div class="d-flex gap-2">
+                    <button class="btn btn-success" onclick="addAllToCart()">
+                        <i class="bi bi-cart-plus"></i> Add All to Cart
+                    </button>
+                    <button class="btn btn-outline-danger" onclick="clearWishlist()">
+                        <i class="bi bi-trash"></i> Clear Wishlist
+                    </button>
+                    <button class="btn btn-outline-primary" onclick="shareWishlist()">
+                        <i class="bi bi-share"></i> Share Wishlist
+                    </button>
+                </div>
+            </div>
+
+            <!-- Wishlist Items Container -->
+            <div id="wishlistItemsContainer" class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
+                <!-- Wishlist items loaded by JavaScript -->
+            </div>
+
+            <!-- Empty Wishlist State -->
+            <div id="emptyWishlist" class="text-center py-5 d-none">
+                <i class="bi bi-heart text-muted" style="font-size: 6rem;"></i>
+                <h3 class="mt-4">Your wishlist is empty!</h3>
+                <p class="text-muted mb-4">Save your favorite items here for easy access later.</p>
+                <a href="products.html" class="btn btn-primary btn-lg">
+                    <i class="bi bi-search"></i> Browse Products
+                </a>
+            </div>
+
+            <!-- Wishlist Tips -->
+            <div id="wishlistTips" class="mt-5 d-none">
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <div class="card h-100 border-0 bg-light">
+                            <div class="card-body text-center">
+                                <i class="bi bi-bell text-primary fs-1 mb-3"></i>
+                                <h5>Price Drop Alerts</h5>
+                                <p class="text-muted small">Get notified when items in your wishlist go on sale</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="card h-100 border-0 bg-light">
+                            <div class="card-body text-center">
+                                <i class="bi bi-share text-success fs-1 mb-3"></i>
+                                <h5>Share with Friends</h5>
+                                <p class="text-muted small">Share your wishlist with family and friends</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="card h-100 border-0 bg-light">
+                            <div class="card-body text-center">
+                                <i class="bi bi-cart-plus text-warning fs-1 mb-3"></i>
+                                <h5>Quick Add to Cart</h5>
+                                <p class="text-muted small">Move items to cart when you're ready to buy</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recently Viewed -->
+            <div class="mt-5">
+                <h4 class="mb-4">Recently Viewed Products</h4>
+                <div id="recentlyViewed" class="row row-cols-2 row-cols-md-4 g-3">
+                    <!-- Recently viewed products loaded by JS -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <h4><i class="bi bi-shop"></i> ShopKart</h4>
+                    <p class="text-white-50">Your trusted online shopping destination for electronics, fashion, and more.</p>
+                    <div class="social-icons mt-3">
+                        <a href="#" class="text-white me-3"><i class="bi bi-facebook fs-4"></i></a>
+                        <a href="#" class="text-white me-3"><i class="bi bi-instagram fs-4"></i></a>
+                        <a href="#" class="text-white me-3"><i class="bi bi-twitter fs-4"></i></a>
+                        <a href="#" class="text-white"><i class="bi bi-youtube fs-4"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h5>Shop</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="products.html?category=electronics" class="text-white-50 text-decoration-none">Electronics</a></li>
+                        <li><a href="products.html?category=fashion" class="text-white-50 text-decoration-none">Fashion</a></li>
+                        <li><a href="products.html?category=footwear" class="text-white-50 text-decoration-none">Footwear</a></li>
+                        <li><a href="products.html?category=home" class="text-white-50 text-decoration-none">Home</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="about.html" class="text-white-50 text-decoration-none">About Us</a></li>
+                        <li><a href="contact.html" class="text-white-50 text-decoration-none">Contact</a></li>
+                        <li><a href="cart.html" class="text-white-50 text-decoration-none">Cart</a></li>
+                        <li><a href="wishlist.html" class="text-white-50 text-decoration-none">Wishlist</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4">
+                    <h5>Contact Us</h5>
+                    <p class="text-white-50">
+                        <i class="bi bi-envelope"></i> support@shopkart.com<br>
+                        <i class="bi bi-phone"></i> +91 98765 43210<br>
+                        <i class="bi bi-geo-alt"></i> Mumbai, Maharashtra, India
+                    </p>
+                </div>
+            </div>
+            <hr class="bg-white my-4">
+            <div class="text-center text-white-50">
+                <p>&copy; 2025 ShopKart. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Login Modal -->
+    <div class="modal fade" id="loginModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"><i class="bi bi-person-circle"></i> Login</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                            <input type="email" class="form-control" placeholder="Email" required>
+                        </div>
+                        <div class="mb-3">
+                            <input type="password" class="form-control" placeholder="Password" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Login</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+        <div id="liveToast" class="toast hide">
+            <div class="toast-header bg-success text-white">
+                <strong class="me-auto">Success</strong>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast"></button>
+            </div>
+            <div class="toast-body" id="toastMessage"></div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/products-data.js"></script>
+    <script src="/js/script.js"></script>
+    <script>
+        // Initialize wishlist page
+        document.addEventListener('DOMContentLoaded', function() {
+            displayWishlistPage();
+        });
+    </script>
+</body>
+</html>

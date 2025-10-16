@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - ShopKart</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top">
+        <div class="container-fluid">
+            <a class="navbar-brand fw-bold" href="index.html">
+                <i class="bi bi-shop"></i> ShopKart
+            </a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="mainNav">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="products.html">All Products</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
+                            Categories
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="products.html?category=electronics">
+                                <i class="bi bi-phone"></i> Electronics
+                            </a></li>
+                            <li><a class="dropdown-item" href="products.html?category=fashion">
+                                <i class="bi bi-bag"></i> Fashion
+                            </a></li>
+                            <li><a class="dropdown-item" href="products.html?category=footwear">
+                                <i class="bi bi-boot"></i> Footwear
+                            </a></li>
+                            <li><a class="dropdown-item" href="products.html?category=home">
+                                <i class="bi bi-house"></i> Home & Furniture
+                            </a></li>
+                            <li><a class="dropdown-item" href="products.html?category=beauty">
+                                <i class="bi bi-heart"></i> Beauty & Care
+                            </a></li>
+                            <li><a class="dropdown-item" href="products.html?category=sports">
+                                <i class="bi bi-trophy"></i> Sports & Fitness
+                            </a></li>
+                            <li><a class="dropdown-item" href="products.html?category=books">
+                                <i class="bi bi-book"></i> Books & Stationery
+                            </a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="about.html">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="contact.html">Contact</a>
+                    </li>
+                </ul>
+                
+                <!-- Search Bar -->
+                <form class="d-flex me-3" onsubmit="searchProducts(event)">
+                    <input class="form-control me-2" type="search" id="navSearchInput" placeholder="Search products..." style="min-width: 250px;">
+                    <button class="btn btn-outline-light" type="submit">
+                        <i class="bi bi-search"></i>
+                    </button>
+                </form>
+                
+                <!-- Action Buttons -->
+                <div class="d-flex gap-2">
+                    <a href="wishlist.html" class="btn btn-outline-light position-relative">
+                        <i class="bi bi-heart"></i>
+                        <span id="wishlistBadge" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                            0
+                        </span>
+                    </a>
+                    <a href="cart.html" class="btn btn-outline-light position-relative">
+                        <i class="bi bi-cart3"></i>
+                        <span id="cartBadge" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                            0
+                        </span>
+                    </a>
+                    <button class="btn btn-light" data-bs-toggle="modal" data-bs-target="#loginModal">
+                        <i class="bi bi-person-circle"></i> Login
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Breadcrumb -->
+    <section class="py-3 bg-light">
+        <div class="container">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb mb-0">
+                    <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                    <li class="breadcrumb-item active">Contact Us</li>
+                </ol>
+            </nav>
+        </div>
+    </section>
+
+    <!-- Contact Header -->
+    <section class="py-5 bg-primary text-white">
+        <div class="container text-center">
+            <h1 class="display-4 fw-bold mb-3">Get In Touch</h1>
+            <p class="lead">We'd love to hear from you! Our team is here to help.</p>
+        </div>
+    </section>
+
+    <!-- Contact Information Cards -->
+    <section class="py-5">
+        <div class="container">
+            <div class="row g-4 mb-5">
+                <div class="col-md-4">
+                    <div class="card h-100 text-center border-0 shadow-sm">
+                        <div class="card-body p-4">
+                            <i class="bi bi-telephone-fill text-primary" style="font-size: 3rem;"></i>
+                            <h4 class="mt-3">Call Us</h4>
+                            <p class="text-muted mb-2">Mon-Sat: 9 AM - 9 PM</p>
+                            <a href="tel:+919876543210" class="text-decoration-none fw-bold">+91 98765 43210</a><br>
+                            <a href="tel:18001234567" class="text-decoration-none">1800-123-4567 (Toll Free)</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card h-100 text-center border-0 shadow-sm">
+                        <div class="card-body p-4">
+                            <i class="bi bi-envelope-fill text-success" style="font-size: 3rem;"></i>
+                            <h4 class="mt-3">Email Us</h4>
+                            <p class="text-muted mb-2">We'll respond within 24 hours</p>
+                            <a href="mailto:support@shopkart.com" class="text-decoration-none fw-bold">support@shopkart.com</a><br>
+                            <a href="mailto:sales@shopkart.com" class="text-decoration-none">sales@shopkart.com</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card h-100 text-center border-0 shadow-sm">
+                        <div class="card-body p-4">
+                            <i class="bi bi-geo-alt-fill text-warning" style="font-size: 3rem;"></i>
+                            <h4 class="mt-3">Visit Us</h4>
+                            <p class="text-muted mb-2">Corporate Office</p>
+                            <p class="fw-bold mb-0">ShopKart Headquarters</p>
+                            <p>123, Business Tower, Andheri East<br>Mumbai, Maharashtra 400069</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contact Form & Map -->
+            <div class="row">
+                <div class="col-lg-6 mb-4">
+                    <div class="card border-0 shadow-sm">
+                        <div class="card-body p-4">
+                            <h3 class="mb-4">Send Us a Message</h3>
+                            <form id="contactForm" class="needs-validation" novalidate>
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="firstName" class="form-label">First Name *</label>
+                                        <input type="text" class="form-control" id="firstName" required>
+                                        <div class="invalid-feedback">Please enter your first name.</div>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="lastName" class="form-label">Last Name *</label>
+                                        <input type="text" class="form-control" id="lastName" required>
+                                        <div class="invalid-feedback">Please enter your last name.</div>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="email" class="form-label">Email Address *</label>
+                                    <input type="email" class="form-control" id="email" required>
+                                    <div class="invalid-feedback">Please enter a valid email.</div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="phone" class="form-label">Phone Number</label>
+                                    <input type="tel" class="form-control" id="phone" pattern="[0-9]{10}">
+                                    <div class="invalid-feedback">Please enter a valid 10-digit phone number.</div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="subject" class="form-label">Subject *</label>
+                                    <select class="form-select" id="subject" required>
+                                        <option value="">Choose...</option>
+                                        <option value="order">Order Related Query</option>
+                                        <option value="product">Product Inquiry</option>
+                                        <option value="return">Return/Exchange</option>
+                                        <option value="complaint">Complaint</option>
+                                        <option value="feedback">Feedback</option>
+                                        <option value="other">Other</option>
+                                    </select>
+                                    <div class="invalid-feedback">Please select a subject.</div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="orderNumber" class="form-label">Order Number (if applicable)</label>
+                                    <input type="text" class="form-control" id="orderNumber" placeholder="e.g., SK123456789">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="message" class="form-label">Message *</label>
+                                    <textarea class="form-control" id="message" rows="5" required></textarea>
+                                    <div class="invalid-feedback">Please enter your message.</div>
+                                </div>
+                                <button type="submit" class="btn btn-primary btn-lg w-100">
+                                    <i class="bi bi-send"></i> Send Message
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Map & Additional Info -->
+                <div class="col-lg-6">
+                    <div class="card border-0 shadow-sm mb-4">
+                        <div class="card-body p-0">
+                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d241317.11609823277!2d72.71637344453125!3d19.082177500000006!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7c6306644edc1%3A0x5da4ed8f8d648c69!2sMumbai%2C%20Maharashtra!5e0!3m2!1sen!2sin!4v1234567890" width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy" class="rounded-top"></iframe>
+                        </div>
+                    </div>
+
+                    <!-- FAQ Accordion -->
+                    <div class="card border-0 shadow-sm">
+                        <div class="card-body p-4">
+                            <h4 class="mb-3">Frequently Asked Questions</h4>
+                            <div class="accordion" id="faqAccordion">
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header">
+                                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+                                            How can I track my order?
+                                        </button>
+                                    </h2>
+                                    <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
+                                        <div class="accordion-body">
+                                            You can track your order by logging into your account and visiting the "My Orders" section. You'll receive a tracking ID via email once your order is shipped.
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+                                            What is your return policy?
+                                        </button>
+                                    </h2>
+                                    <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                        <div class="accordion-body">
+                                            We offer a 30-day return policy for most products. Items must be unused and in original packaging. Return shipping is free for defective items.
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
+                                            Do you offer Cash on Delivery?
+                                        </button>
+                                    </h2>
+                                    <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                        <div class="accordion-body">
+                                            Yes, Cash on Delivery (COD) is available for orders below ₹50,000 in select locations. A nominal COD fee may apply.
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq4">
+                                            How long does delivery take?
+                                        </button>
+                                    </h2>
+                                    <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                        <div class="accordion-body">
+                                            Standard delivery takes 3-7 business days. Express delivery options are available at checkout for faster shipping.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Social Media Section -->
+    <section class="py-5 bg-light">
+        <div class="container text-center">
+            <h3 class="mb-4">Connect With Us</h3>
+            <p class="text-muted mb-4">Follow us on social media for latest updates and offers</p>
+            <div class="social-icons-large">
+                <a href="#" class="btn btn-primary btn-lg me-2 mb-2">
+                    <i class="bi bi-facebook"></i> Facebook
+                </a>
+                <a href="#" class="btn btn-danger btn-lg me-2 mb-2">
+                    <i class="bi bi-instagram"></i> Instagram
+                </a>
+                <a href="#" class="btn btn-info btn-lg me-2 mb-2">
+                    <i class="bi bi-twitter"></i> Twitter
+                </a>
+                <a href="#" class="btn btn-danger btn-lg me-2 mb-2">
+                    <i class="bi bi-youtube"></i> YouTube
+                </a>
+                <a href="#" class="btn btn-success btn-lg mb-2">
+                    <i class="bi bi-whatsapp"></i> WhatsApp
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <h4><i class="bi bi-shop"></i> ShopKart</h4>
+                    <p class="text-white-50">Your trusted online shopping destination for electronics, fashion, and more.</p>
+                    <div class="social-icons mt-3">
+                        <a href="#" class="text-white me-3"><i class="bi bi-facebook fs-4"></i></a>
+                        <a href="#" class="text-white me-3"><i class="bi bi-instagram fs-4"></i></a>
+                        <a href="#" class="text-white me-3"><i class="bi bi-twitter fs-4"></i></a>
+                        <a href="#" class="text-white"><i class="bi bi-youtube fs-4"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h5>Shop</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="products.html?category=electronics" class="text-white-50 text-decoration-none">Electronics</a></li>
+                        <li><a href="products.html?category=fashion" class="text-white-50 text-decoration-none">Fashion</a></li>
+                        <li><a href="products.html?category=footwear" class="text-white-50 text-decoration-none">Footwear</a></li>
+                        <li><a href="products.html?category=home" class="text-white-50 text-decoration-none">Home</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="about.html" class="text-white-50 text-decoration-none">About Us</a></li>
+                        <li><a href="contact.html" class="text-white-50 text-decoration-none">Contact</a></li>
+                        <li><a href="cart.html" class="text-white-50 text-decoration-none">Cart</a></li>
+                        <li><a href="wishlist.html" class="text-white-50 text-decoration-none">Wishlist</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4">
+                    <h5>Contact Us</h5>
+                    <p class="text-white-50">
+                        <i class="bi bi-envelope"></i> support@shopkart.com<br>
+                        <i class="bi bi-phone"></i> +91 98765 43210<br>
+                        <i class="bi bi-geo-alt"></i> Mumbai, Maharashtra, India
+                    </p>
+                </div>
+            </div>
+            <hr class="bg-white my-4">
+            <div class="text-center text-white-50">
+                <p>&copy; 2025 ShopKart. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Login Modal -->
+    <div class="modal fade" id="loginModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Login</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                            <input type="email" class="form-control" placeholder="Email" required>
+                        </div>
+                        <div class="mb-3">
+                            <input type="password" class="form-control" placeholder="Password" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Login</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Toast -->
+    <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+        <div id="liveToast" class="toast hide">
+            <div class="toast-header bg-success text-white">
+                <strong class="me-auto">Success</strong>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast"></button>
+            </div>
+            <div class="toast-body" id="toastMessage">Message sent successfully!</div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/products-data.js"></script>
+    <script src="/js/script.js"></script>
+    <script>
+        // Contact form validation
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            if (this.checkValidity()) {
+                showToast('Message sent successfully! We will get back to you soon.');
+                this.reset();
+                this.classList.remove('was-validated');
+            } else {
+                this.classList.add('was-validated');
+            }
+        });
+    </script>
+</body>
+</html>

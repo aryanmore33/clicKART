@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products - ShopKart</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <!-- Same Navigation as index.html -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top">
+        <div class="container-fluid">
+            <a class="navbar-brand fw-bold" href="index.html">
+                <i class="bi bi-shop"></i> ShopKart
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="mainNav">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="products.html">All Products</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Categories</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="products.html?category=electronics"><i class="bi bi-phone"></i> Electronics</a></li>
+                            <li><a class="dropdown-item" href="products.html?category=fashion"><i class="bi bi-bag"></i> Fashion</a></li>
+                            <li><a class="dropdown-item" href="products.html?category=footwear"><i class="bi bi-boot"></i> Footwear</a></li>
+                            <li><a class="dropdown-item" href="products.html?category=home"><i class="bi bi-house"></i> Home & Furniture</a></li>
+                            <li><a class="dropdown-item" href="products.html?category=beauty"><i class="bi bi-heart"></i> Beauty & Care</a></li>
+                            <li><a class="dropdown-item" href="products.html?category=sports"><i class="bi bi-trophy"></i> Sports & Fitness</a></li>
+                            <li><a class="dropdown-item" href="products.html?category=books"><i class="bi bi-book"></i> Books & Stationery</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+                </ul>
+                <form class="d-flex me-3" onsubmit="searchProducts(event)">
+                    <input class="form-control me-2" type="search" id="navSearchInput" placeholder="Search products..." style="min-width: 250px;">
+                    <button class="btn btn-outline-light" type="submit"><i class="bi bi-search"></i></button>
+                </form>
+                <div class="d-flex gap-2">
+                    <a href="wishlist.html" class="btn btn-outline-light position-relative">
+                        <i class="bi bi-heart"></i>
+                        <span id="wishlistBadge" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">0</span>
+                    </a>
+                    <a href="cart.html" class="btn btn-outline-light position-relative">
+                        <i class="bi bi-cart3"></i>
+                        <span id="cartBadge" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">0</span>
+                    </a>
+                    <button class="btn btn-light" data-bs-toggle="modal" data-bs-target="#loginModal"><i class="bi bi-person-circle"></i> Login</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Breadcrumb -->
+    <section class="py-3 bg-light">
+        <div class="container">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb mb-0">
+                    <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                    <li class="breadcrumb-item active">Products</li>
+                </ol>
+            </nav>
+        </div>
+    </section>
+
+    <!-- Products Page -->
+    <section class="py-5">
+        <div class="container">
+            <div class="row">
+                <!-- Sidebar Filters -->
+                <div class="col-lg-3 mb-4">
+                    <div class="filter-sidebar bg-light p-4 rounded">
+                        <h5 class="mb-4">Filters</h5>
+                        
+                        <!-- Category Filter -->
+                        <div class="mb-4">
+                            <h6>Category</h6>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="category" value="all" id="catAll" checked>
+                                <label class="form-check-label" for="catAll">All Products</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="category" value="electronics" id="catElectronics">
+                                <label class="form-check-label" for="catElectronics">Electronics</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="category" value="fashion" id="catFashion">
+                                <label class="form-check-label" for="catFashion">Fashion</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="category" value="footwear" id="catFootwear">
+                                <label class="form-check-label" for="catFootwear">Footwear</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="category" value="home" id="catHome">
+                                <label class="form-check-label" for="catHome">Home & Furniture</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="category" value="beauty" id="catBeauty">
+                                <label class="form-check-label" for="catBeauty">Beauty & Care</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="category" value="sports" id="catSports">
+                                <label class="form-check-label" for="catSports">Sports & Fitness</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="category" value="books" id="catBooks">
+                                <label class="form-check-label" for="catBooks">Books</label>
+                            </div>
+                        </div>
+
+                        <!-- Price Range -->
+                        <div class="mb-4">
+                            <h6>Price Range</h6>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="0-1000" id="price1">
+                                <label class="form-check-label" for="price1">Under ₹1,000</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="1000-5000" id="price2">
+                                <label class="form-check-label" for="price2">₹1,000 - ₹5,000</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="5000-15000" id="price3">
+                                <label class="form-check-label" for="price3">₹5,000 - ₹15,000</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="15000-50000" id="price4">
+                                <label class="form-check-label" for="price4">₹15,000 - ₹50,000</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="50000-999999" id="price5">
+                                <label class="form-check-label" for="price5">Above ₹50,000</label>
+                            </div>
+                        </div>
+
+                        <!-- Rating Filter -->
+                        <div class="mb-4">
+                            <h6>Rating</h6>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="4" id="rating4">
+                                <label class="form-check-label" for="rating4">4★ & above</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="3" id="rating3">
+                                <label class="form-check-label" for="rating3">3★ & above</label>
+                            </div>
+                        </div>
+
+                        <button class="btn btn-primary w-100 mb-2" onclick="applyAllFilters()">Apply Filters</button>
+                        <button class="btn btn-outline-secondary w-100" onclick="clearAllFilters()">Clear All</button>
+                    </div>
+                </div>
+
+                <!-- Products Grid -->
+                <div class="col-lg-9">
+                    <!-- Sort and Search -->
+                    <div class="row mb-4 align-items-center">
+                        <div class="col-md-6">
+                            <h4><span id="productCount">0</span> Products Found</h4>
+                        </div>
+                        <div class="col-md-6">
+                            <select class="form-select" id="sortSelect" onchange="sortProducts()">
+                                <option value="default">Sort By: Default</option>
+                                <option value="price-low">Price: Low to High</option>
+                                <option value="price-high">Price: High to Low</option>
+                                <option value="name">Name: A to Z</option>
+                                <option value="rating">Highest Rated</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Products Container -->
+                    <div id="productsContainer" class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
+                        <!-- Products loaded by JS -->
+                    </div>
+
+                    <!-- No Results -->
+                    <div id="noResults" class="text-center py-5 d-none">
+                        <i class="bi bi-search text-muted" style="font-size: 5rem;"></i>
+                        <h4 class="mt-3">No products found</h4>
+                        <p class="text-muted">Try adjusting your filters</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Same Footer and Modals as index.html -->
+    <footer class="bg-dark text-white py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <h4><i class="bi bi-shop"></i> ShopKart</h4>
+                    <p class="text-white-50">Your trusted online shopping destination.</p>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="about.html" class="text-white-50">About Us</a></li>
+                        <li><a href="contact.html" class="text-white-50">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <div class="modal fade" id="loginModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Login</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form><div class="mb-3"><input type="email" class="form-control" placeholder="Email" required></div>
+                    <div class="mb-3"><input type="password" class="form-control" placeholder="Password" required></div>
+                    <button type="submit" class="btn btn-primary w-100">Login</button></form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+        <div id="liveToast" class="toast hide">
+            <div class="toast-header bg-success text-white">
+                <strong class="me-auto">Success</strong>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast"></button>
+            </div>
+            <div class="toast-body" id="toastMessage"></div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/products-data.js"></script>
+    <script src="/js/script.js"></script>
+</body>
+</html>

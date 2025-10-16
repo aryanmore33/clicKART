@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ClicKart - Your One-Stop Shopping Destination</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top">
+        <div class="container-fluid">
+            <a class="navbar-brand fw-bold" href="index.html">
+                <i class="bi bi-shop"></i> ClicKart
+            </a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="mainNav">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="products.html">All Products</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
+                            Categories
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="products.html?category=electronics">
+                                <i class="bi bi-phone"></i> Electronics
+                            </a></li>
+                            <li><a class="dropdown-item" href="products.html?category=fashion">
+                                <i class="bi bi-bag"></i> Fashion
+                            </a></li>
+                            <li><a class="dropdown-item" href="products.html?category=footwear">
+                                <i class="bi bi-boot"></i> Footwear
+                            </a></li>
+                            <li><a class="dropdown-item" href="products.html?category=home">
+                                <i class="bi bi-house"></i> Home & Furniture
+                            </a></li>
+                            <li><a class="dropdown-item" href="products.html?category=beauty">
+                                <i class="bi bi-heart"></i> Beauty & Care
+                            </a></li>
+                            <li><a class="dropdown-item" href="products.html?category=sports">
+                                <i class="bi bi-trophy"></i> Sports & Fitness
+                            </a></li>
+                            <li><a class="dropdown-item" href="products.html?category=books">
+                                <i class="bi bi-book"></i> Books & Stationery
+                            </a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="about.html">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="contact.html">Contact</a>
+                    </li>
+                </ul>
+                
+                <!-- Search Bar -->
+                <form class="d-flex me-3" onsubmit="searchProducts(event)">
+                    <input class="form-control me-2" type="search" id="navSearchInput" placeholder="Search products..." style="min-width: 250px;">
+                    <button class="btn btn-outline-light" type="submit">
+                        <i class="bi bi-search"></i>
+                    </button>
+                </form>
+                
+                <!-- Action Buttons -->
+                <div class="d-flex gap-2">
+                    <a href="wishlist.html" class="btn btn-outline-light position-relative">
+                        <i class="bi bi-heart"></i>
+                        <span id="wishlistBadge" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                            0
+                        </span>
+                    </a>
+                    <a href="cart.html" class="btn btn-outline-light position-relative">
+                        <i class="bi bi-cart3"></i>
+                        <span id="cartBadge" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                            0
+                        </span>
+                    </a>
+                    <button class="btn btn-light" data-bs-toggle="modal" data-bs-target="#loginModal">
+                        <i class="bi bi-person-circle"></i> Login
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Carousel -->
+    <section class="hero-section">
+        <div id="heroCarousel" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="0" class="active"></button>
+                <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="1"></button>
+                <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="2"></button>
+            </div>
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <div class="hero-slide hero-slide-1">
+                        <div class="container">
+                            <div class="row align-items-center">
+                                <div class="col-lg-6 text-white">
+                                    <h1 class="display-3 fw-bold mb-4">Electronics Sale</h1>
+                                    <p class="lead mb-4">Up to 50% off on latest smartphones & laptops</p>
+                                    <a href="products.html?category=electronics" class="btn btn-warning btn-lg">Shop Now</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <div class="hero-slide hero-slide-2">
+                        <div class="container">
+                            <div class="row align-items-center">
+                                <div class="col-lg-6 text-white">
+                                    <h1 class="display-3 fw-bold mb-4">Fashion Trends</h1>
+                                    <p class="lead mb-4">Discover the latest styles & collections</p>
+                                    <a href="products.html?category=fashion" class="btn btn-warning btn-lg">Explore Fashion</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <div class="hero-slide hero-slide-3">
+                        <div class="container">
+                            <div class="row align-items-center">
+                                <div class="col-lg-6 text-white">
+                                    <h1 class="display-3 fw-bold mb-4">Home Essentials</h1>
+                                    <p class="lead mb-4">Transform your living space</p>
+                                    <a href="products.html?category=home" class="btn btn-warning btn-lg">Shop Home</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon"></span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon"></span>
+            </button>
+        </div>
+    </section>
+
+    <!-- Categories Section -->
+    <section class="py-5 bg-light">
+        <div class="container">
+            <h2 class="text-center mb-5 section-heading">Shop by Category</h2>
+            <div class="row g-4">
+                <div class="col-lg-3 col-md-4 col-sm-6">
+                    <a href="products.html?category=electronics" class="text-decoration-none">
+                        <div class="category-card text-center">
+                            <i class="bi bi-laptop category-icon text-primary"></i>
+                            <h5 class="mt-3">Electronics</h5>
+                            <p class="text-muted small">Mobiles, Laptops & More</p>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-6">
+                    <a href="products.html?category=fashion" class="text-decoration-none">
+                        <div class="category-card text-center">
+                            <i class="bi bi-bag category-icon text-success"></i>
+                            <h5 class="mt-3">Fashion</h5>
+                            <p class="text-muted small">Clothing & Accessories</p>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-6">
+                    <a href="products.html?category=footwear" class="text-decoration-none">
+                        <div class="category-card text-center">
+                            <i class="bi bi-boot category-icon text-danger"></i>
+                            <h5 class="mt-3">Footwear</h5>
+                            <p class="text-muted small">Shoes, Sneakers & Sandals</p>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-6">
+                    <a href="products.html?category=home" class="text-decoration-none">
+                        <div class="category-card text-center">
+                            <i class="bi bi-house category-icon text-warning"></i>
+                            <h5 class="mt-3">Home & Furniture</h5>
+                            <p class="text-muted small">Decor & Essentials</p>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-6">
+                    <a href="products.html?category=beauty" class="text-decoration-none">
+                        <div class="category-card text-center">
+                            <i class="bi bi-heart category-icon text-pink"></i>
+                            <h5 class="mt-3">Beauty & Care</h5>
+                            <p class="text-muted small">Cosmetics & Skincare</p>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-6">
+                    <a href="products.html?category=sports" class="text-decoration-none">
+                        <div class="category-card text-center">
+                            <i class="bi bi-trophy category-icon text-info"></i>
+                            <h5 class="mt-3">Sports & Fitness</h5>
+                            <p class="text-muted small">Equipment & Wear</p>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-6">
+                    <a href="products.html?category=books" class="text-decoration-none">
+                        <div class="category-card text-center">
+                            <i class="bi bi-book category-icon text-secondary"></i>
+                            <h5 class="mt-3">Books</h5>
+                            <p class="text-muted small">Books & Stationery</p>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-6">
+                    <a href="products.html" class="text-decoration-none">
+                        <div class="category-card text-center">
+                            <i class="bi bi-grid category-icon text-dark"></i>
+                            <h5 class="mt-3">View All</h5>
+                            <p class="text-muted small">Browse Everything</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Products -->
+    <section class="py-5">
+        <div class="container">
+            <h2 class="text-center mb-5 section-heading">Featured Products</h2>
+            <div id="featuredProducts" class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
+                <!-- Products loaded by JavaScript -->
+            </div>
+            <div class="text-center mt-4">
+                <a href="products.html" class="btn btn-primary btn-lg">View All Products</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Deals Section -->
+    <section class="py-5 bg-gradient-primary text-white">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-8">
+                    <h2 class="display-4 fw-bold mb-3">Today's Best Deals!</h2>
+                    <p class="lead">Limited time offers on your favorite products</p>
+                </div>
+                <div class="col-lg-4 text-lg-end">
+                    <a href="products.html" class="btn btn-warning btn-lg px-5">Shop Deals</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-5 bg-light">
+        <div class="container">
+            <div class="row g-4 text-center">
+                <div class="col-md-3">
+                    <i class="bi bi-truck feature-icon text-primary"></i>
+                    <h5 class="mt-3">Free Shipping</h5>
+                    <p class="text-muted">On orders above ₹500</p>
+                </div>
+                <div class="col-md-3">
+                    <i class="bi bi-shield-check feature-icon text-success"></i>
+                    <h5 class="mt-3">Secure Payment</h5>
+                    <p class="text-muted">100% secure transactions</p>
+                </div>
+                <div class="col-md-3">
+                    <i class="bi bi-arrow-repeat feature-icon text-info"></i>
+                    <h5 class="mt-3">Easy Returns</h5>
+                    <p class="text-muted">30-day return policy</p>
+                </div>
+                <div class="col-md-3">
+                    <i class="bi bi-headset feature-icon text-warning"></i>
+                    <h5 class="mt-3">24/7 Support</h5>
+                    <p class="text-muted">Always here to help</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <h4><i class="bi bi-shop"></i> ClicKart</h4>
+                    <p class="text-white-50">Your trusted online shopping destination for electronics, fashion, and more.</p>
+                    <div class="social-icons mt-3">
+                        <a href="#" class="text-white me-3"><i class="bi bi-facebook fs-4"></i></a>
+                        <a href="#" class="text-white me-3"><i class="bi bi-instagram fs-4"></i></a>
+                        <a href="#" class="text-white me-3"><i class="bi bi-twitter fs-4"></i></a>
+                        <a href="#" class="text-white"><i class="bi bi-youtube fs-4"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h5>Shop</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="products.html?category=electronics" class="text-white-50">Electronics</a></li>
+                        <li><a href="products.html?category=fashion" class="text-white-50">Fashion</a></li>
+                        <li><a href="products.html?category=footwear" class="text-white-50">Footwear</a></li>
+                        <li><a href="products.html?category=home" class="text-white-50">Home</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="about.html" class="text-white-50">About Us</a></li>
+                        <li><a href="contact.html" class="text-white-50">Contact</a></li>
+                        <li><a href="cart.html" class="text-white-50">Cart</a></li>
+                        <li><a href="wishlist.html" class="text-white-50">Wishlist</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4">
+                    <h5>Newsletter</h5>
+                    <p class="text-white-50">Subscribe to get special offers</p>
+                    <form class="input-group">
+                        <input type="email" class="form-control" placeholder="Your email">
+                        <button class="btn btn-warning" type="submit">Subscribe</button>
+                    </form>
+                </div>
+            </div>
+            <hr class="bg-white my-4">
+            <div class="text-center text-white-50">
+                <p>&copy; 2025 ClicKart. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Login Modal -->
+    <div class="modal fade" id="loginModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"><i class="bi bi-person-circle"></i> Login</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                            <label class="form-label">Email</label>
+                            <input type="email" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Password</label>
+                            <input type="password" class="form-control" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Login</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+        <div id="liveToast" class="toast hide" role="alert">
+            <div class="toast-header bg-success text-white">
+                <strong class="me-auto">Success</strong>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast"></button>
+            </div>
+            <div class="toast-body" id="toastMessage"></div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/products-data.js"></script>
+    <script src="/js/script.js"></script>
+</body>
+</html>
